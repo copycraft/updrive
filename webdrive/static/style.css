@@ -1,0 +1,5 @@
+/* Filename: webdrive/static/style.css */
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+a { text-decoration: none; }

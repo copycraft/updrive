@@ -1,8 +1,8 @@
-# app/main.py
+# app/router.py
 from fastapi import FastAPI
 # ... imports ...
 # Routers
-from .routers import auth as auth_router, files as files_router, root as root_router
+from .routers import auth as auth_router, files as files_router, root as root_router, router as register_router
 from .config import settings
 from .db import init_db
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,6 +24,8 @@ app.add_middleware(
 app.include_router(auth_router.router)
 app.include_router(files_router.router)
 app.include_router(root_router.router)
+
+app.include_router(register_router)
 
 @app.on_event("startup")
 def on_startup():

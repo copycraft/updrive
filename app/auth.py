@@ -2,7 +2,7 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from typing import Optional
 from sqlmodel import Session, select
@@ -40,10 +40,36 @@ def get_user_by_username(session: Session, username: str) -> Optional[User]:
     return session.exec(statement).first()
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
+def _get_token_from_header_or_cookie(request: Request) -> Optional[str]:
+    """
+    If Authorization header present: return token (raw token or "Bearer ...")
+    Else if cookie "access_token" present: return that (we support both raw token or "Bearer ...")
+    """
+    auth_header = request.headers.get("authorization")
+    if auth_header:
+        return auth_header
+    cookie = request.cookies.get("access_token")
+    if cookie:
+        return cookie
+    return None
+
+
+def get_current_user(request: Request = Depends()) -> User:
     credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"}
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
     )
+    token_raw = _get_token_from_header_or_cookie(request)
+    if not token_raw:
+        raise credentials_exception
+
+    # token may be "Bearer <token>" or just "<token>"
+    if token_raw.lower().startswith("bearer "):
+        token = token_raw.split(" ", 1)[1]
+    else:
+        token = token_raw
+
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: Optional[str] = payload.get("sub")

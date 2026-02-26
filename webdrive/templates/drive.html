@@ -1,0 +1,51 @@
+<!-- Filename: webdrive/templates/drive.html -->
+{% extends "base.html" %}
+{% block content %}
+  <div class="flex gap-6">
+    <!-- Left sidebar -->
+    <aside class="w-64 bg-slate-800 p-4 rounded-xl shadow flex-shrink-0">
+      <div class="mb-4">
+        <div class="text-slate-300 text-sm">WebDrive</div>
+        <div class="font-semibold text-white">Your Files</div>
+      </div>
+
+      <div class="mb-4">
+        <div class="text-slate-400 text-sm">Storage</div>
+        <div id="usage" class="mt-2">
+          <div class="text-slate-300 text-sm">Loading usage...</div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <a href="/" class="block py-2 px-3 rounded hover:bg-slate-700">Home</a>
+        <form method="post" action="/logout" class="mt-2">
+          <button class="w-full py-2 px-3 rounded bg-slate-700 text-sm">Sign out</button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <section class="flex-1">
+      <div class="mb-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold">Your Drive</h2>
+          <div>
+            <label class="cursor-pointer inline-flex items-center gap-2 bg-slate-800 p-2 rounded">
+              <input id="fileInput" type="file" class="hidden" />
+              <span class="text-sm text-slate-300">Upload</span>
+              <button id="uploadButton" class="ml-2 px-3 py-1 bg-indigo-600 rounded">Choose</button>
+            </label>
+            <button id="refreshBtn" class="ml-3 px-3 py-1 bg-slate-700 rounded">Refresh</button>
+          </div>
+        </div>
+        <div id="dropzone" class="mt-4 p-6 rounded border-2 border-dashed border-slate-700 text-center text-slate-400">
+          Drag & drop files here or click Upload
+        </div>
+      </div>
+
+      <div id="filesGrid" class="grid grid-cols-4 gap-4">
+        <!-- JS will populate files -->
+      </div>
+    </section>
+  </div>
+{% endblock %}
