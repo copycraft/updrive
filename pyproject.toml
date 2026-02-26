@@ -5,13 +5,13 @@ description = "Add your description here"
 requires-python = ">=3.14"
 dependencies = [
     "aiofiles==23.2.1",
-    "fastapi==0.110.0",
+    "fastapi==0.133.1",
     "passlib==1.7.4",
     "pydantic-settings==2.13.1",
     "python-dotenv==1.0.1",
     "python-jose==3.3.0",
     "python-multipart==0.0.9",
-    "sqlalchemy==2.0.29",
-    "sqlmodel==0.0.16",
+    "sqlalchemy==2.0.47",
+    "sqlmodel==0.0.37",
     "uvicorn==0.30.6",
 ]

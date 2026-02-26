@@ -1,7 +1,7 @@
-fastapi==0.110.0
+fastapi==0.133.1
 uvicorn[standard]==0.30.6
-sqlmodel==0.0.16
-sqlalchemy==2.0.29
+sqlmodel==0.0.37
+sqlalchemy==2.0.47
 pydantic-settings==2.13.1
 python-multipart==0.0.9
 passlib[bcrypt]==1.7.4
